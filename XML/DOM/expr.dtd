@@ -1,0 +1,4 @@
+<!ELEMENT prod (sum | prod | int)*>
+<!ELEMENT sum (sum | prod | int)*>
+<!ELEMENT int EMPTY>
+<!ATTLIST int val CDATA #REQUIRED>

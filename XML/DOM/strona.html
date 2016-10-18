@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>test</title>
+<script>
+function odwracanie() {
+	var birds = document.getElementById("birds").getElementsByTagName("li");
+	var length = birds.length/2;
+	var j = birds.length-1;
+	for(var i=0;i<length;i++){
+		var tmp = birds[j].innerHTML;
+		birds[j].innerHTML = birds[i].innerHTML;
+		birds[i].innerHTML = tmp;
+		j--;
+	}
+}
+</script>
+</head>
+<body>
+<ul id="birds">
+  <li>Bald Eagle</li>
+  <li>Falcon</li>
+  <li>Condor</li>
+  <li>Albatross</li>
+  <li>Parrot</li>
+</ul>
+<button onclick="odwracanie()">odwroc</button>
+</body>
+</html>

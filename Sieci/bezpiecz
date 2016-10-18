@@ -1,0 +1,240 @@
+149.156.168.164 moj firewall
+5
+10.x.1.1/24
+security {                              
+    forwarding-options {                
+        family {                        
+            mpls {                      
+                mode packet-based;      
+            }                           
+        }                               
+    }                                   
+    zones {                             
+        functional-zone management {    
+            interfaces {                
+                ge-0/0/0.0;             
+            }                           
+            host-inbound-traffic {      
+                system-services {       
+                    telnet;             
+                }                       
+            }                           
+        }                               
+        security-zone KADRY {           
+            interfaces {                
+                ge-0/0/1.500;           
+            }                           
+        }                               
+        security-zone INTERNET {        
+            interfaces {                
+                ge-0/0/2.501;           
+            }                           
+        }                               
+    }                                   
+}                  
+
+164
+178 pogram kadry
+177 test
+
+interfaces {                            
+    ge-0/0/0 {                          
+        unit 0 {                        
+            family inet {               
+                address 149.156.168.164/26;
+            }                           
+        }                               
+    }                                   
+    ge-0/0/1 {                          
+        vlan-tagging;                   
+        unit 500 {                      
+            description KADRY;          
+            vlan-id 500;                
+            family inet {               
+                address 10.5.1.1/24;    
+            }                           
+        }                               
+        unit 502 {                      
+            description PROGRAMISCI;    
+            vlan-id 502;                
+            family inet {               
+                address 10.5.2.129/25;  
+            }                           
+        }                               
+    }                                   
+    ge-0/0/2 {                          
+        description INTERNET;           
+        vlan-tagging;                   
+        unit 501 {                      
+            vlan-id 501;                
+            family inet {               
+                address 20.5.1.1/24;    
+            }                           
+        }                               
+    }                                   
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 149.156.168.129;
+    }
+}
+protocols {
+    stp;
+}
+security {
+    nat {
+        source {
+            inactive: pool POOL1 {
+                address {
+                    1.1.1.0/24;
+                }
+            }
+            inactive: pool POOL2 {
+                address {
+                    2.2.2.1/32 to 2.2.2.2/32;
+                }
+                port no-translation;
+            }
+            pool POOL3 {
+                address {
+                    10.5.1.5/32 to 10.5.1.9/32;
+                }
+            }
+            inactive: rule-set RULE-P-K {
+                from interface ge-0/0/1.502;
+                to zone KADRY;
+                rule RULE1 {
+                    match {
+                        source-address 0.0.0.0/0;
+                    }
+                    then {
+                        source-nat {
+                            off;
+                        }
+                    }
+                }
+            }
+            rule-set RULE-P-K_POOL {
+                from interface ge-0/0/1.502;
+                to zone KADRY;
+                rule RULE1 {
+                    match {
+                        source-address 0.0.0.0/0;
+                    }                   
+                    then {
+                        source-nat {
+                            pool {
+                                POOL3;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        proxy-arp {
+            interface ge-0/0/1.500 {
+                address {
+                    10.5.1.5/32 to 10.5.1.9/32;
+                }
+            }
+        }
+    }
+    policies {
+        from-zone KADRY to-zone INTERNET {
+            policy KADRY2INTERNET {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application junos-ping;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone INTERNET to-zone KADRY {
+            policy I2k {
+                match {
+                    source-address [ KADRY_ZAMORSKIE ADD1 ];
+                    destination-address any;
+                    application junos-telnet;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone PROGRAMISCI to-zone KADRY {
+            policy P2K {
+                match {
+                    source-address PROG1;
+                    destination-address ALL_K;
+                    application [ junos-telnet APKA MOJPING ];
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+    }
+    zones {
+        functional-zone management {
+            interfaces {
+                ge-0/0/0.0;
+            }
+            host-inbound-traffic {
+                system-services {
+                    telnet;
+                    ftp;
+                }
+            }
+        }
+        security-zone KADRY {
+            address-book {
+                address ALL_K 10.5.1.0/24;
+            }
+            host-inbound-traffic {
+                system-services {
+                    ping;
+                }
+            }
+            interfaces {
+                ge-0/0/1.500;
+            }
+        }
+        security-zone INTERNET {
+            address-book {
+                address ADD1 20.5.1.2/32;
+                address ADD2 30.5.5.0/24;
+                address ADD3 50.5.7.0/24;
+                address-set KADRY_ZAMORSKIE {
+                    address ADD2;
+                    address ADD3;
+                }
+            }
+            host-inbound-traffic {
+                system-services {
+                    ping;
+                }
+            }
+            interfaces {
+                ge-0/0/2.501;           
+            }
+        }
+        security-zone PROGRAMISCI {
+            address-book {
+                address ALL_P 10.5.2.128/25;
+                address PROG1 10.5.2.128/26;
+            }
+            host-inbound-traffic {
+                system-services {
+                    ping;
+                }
+            }
+            interfaces {
+                ge-0/0/1.502;
+            }
+        }
+    }
+}
+

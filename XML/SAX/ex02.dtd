@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!ELEMENT root (descr?, body)>
+<!ELEMENT descr (#PCDATA)>
+<!ATTLIST descr 	author CDATA #IMPLIED
+		   	date CDATA #IMPLIED >
+<!ELEMENT body (div*)>
+<!ELEMENT div (#PCDATA | sect)*>
+<!ATTLIST div 	id ID #IMPLIED
+	        class CDATA #IMPLIED >
+<!ELEMENT sect (#PCDATA) >
+<!ENTITY AU "Pekka Kilpeläinen"> 

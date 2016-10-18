@@ -1,0 +1,18 @@
+<!ELEMENT reglist (student*)>
+<!ATTLIST reglist 
+	courseID NMTOKEN #REQUIRED
+	lastID CDATA #REQUIRED >
+<!ELEMENT student (name, branchAndYear, email, group)>
+<!ATTLIST student 
+	id ID #REQUIRED >
+<!-- Student id's are of the form
+        courseID_N ,
+     where N is a running number -->
+
+<!ELEMENT name (given, family)>
+
+<!ELEMENT given (#PCDATA)>
+<!ELEMENT family (#PCDATA)>
+<!ELEMENT branchAndYear (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT group (#PCDATA)>

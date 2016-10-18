@@ -1,0 +1,72 @@
+ssh R[numer]@cirs
+login: lab
+haslo 082#
+delete
+telnet 149.156.168.188
+lab
+lab123
+run request system logout terminal   
+show ?
+show configuration 
+configure
+run show configuration
+edit system/services
+top25
+show | compare
+commit confirm 1
+BEZ VLAN
+set interfaces ge-0/0/1 unit 0 family inet address 192.168.2.1/30 
+run show route 
+run ping 192.168.8.1        
+show | compare      
+delete interfaces ge-0/0/1    
+numer: 25
+set system login user user5 class super-user 
+set system login user user5 authentication plain-text-password
+250 - 259 vlan
+
+
+set interfaces ge-0/0/1 unit 501 vlan-id 501
+set interfaces ge-0/0/1 unit 501 family inet address 10.5.1.1/30    
+set routing-instances user5 instance-type virtual-router 
+set routing-instances user5 interface ge-0/0/1.501 
+configure private
+
+
+run show route
+run ping 10.5.1.1 routing-instance user5 
+
+STATYCZNY
+set routing-instances user25 routing-options static route 192.25.2.24/29 next-hop 192.25.1.22
+
+RIP
+edit routing-instances user25
+set protocols rip group GRUPA1 neighbor ge-0/0/2.501
+
+set policy-options policy-statement RIPuser25 term DIRECT from protocol direct
+set policy-options policy-statement RIPuser25 term DIRECT then accept 
+set routing-instances user25 protocols rip group GRUPA1 export RIPuser25 
+
+SWITCH
+set interfaces ge-0/0/10 unit 0 family ethernet-switching
+set interfaces ge-0/0/10 unit 0 family ethernet-switching port-mode trunk
+set interfaces ge-0/0/10 unit 0 family ethernet-switching vlan members v900
+set interfaces ge-0/0/10 unit 0 family ethernet-switching vlan members v901
+set interfaces ge-0/0/10 unit 0 family ethernet-switching vlan members v902
+set vlans v900 vlan-id 900
+set interfaces ge-0/0/11 unit 0 family ethernet-switching port-mode access vlan members v900
+set interfaces ge-0/0/12 unit 0 family ethernet-switching port-mode access vlan members v900
+set interfaces ge-0/0/13 unit 0 family ethernet-switching port-mode access vlan members v900
+
+vlans {
+    kadry {
+        vlan-id 981;
+    }
+    programisci {
+        vlan-id 982;
+    }
+    testerzy {
+        vlan-id 983;
+    }
+}
+

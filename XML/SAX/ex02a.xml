@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<?PI bite this processor! ?>
+<!DOCTYPE root SYSTEM "ex02.dtd"[
+<!ENTITY DIV2 SYSTEM "div2.xml">
+]>
+<root>
+<descr date="23.2.06" author="PK">Small test document</descr>
+  <body>
+    <div id="Div01" class="junk">
+      <sect>This is a section written by &AU;.</sect>
+    </div>&DIV2;
+  </body>
+</root>

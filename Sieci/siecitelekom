@@ -1,0 +1,85 @@
+
+nr 5
+
+telnet 149.156.168.183
+
+OSPF
+
+set routing-instances USER5 protocols ospf area 0 interface ge-0/0/1.504
+######edit routing-instances USER5
+######set protocols ospf area 0 interface ge-0/0/1.504
+
+run show ospf neighbor instance USER5
+run show ospf database instance USER5	
+
+LOOPBACK 
+set interfaces lo0 unit 5 family inet address 192.168.5.185/32
+set routing-instances USER5 interface lo0.5
+set routing-instances USER5 protocols ospf area 0 interface lo0.5 passive
+
+domyslna 
+routing-options static route 0/0 next-hop 50.5.1.1 
+
+domyślna sciezka rozglaszana do obszaru, conf na ABR
+set routing-instances USER5 protocols ospf area 20 stub default-metric 20
+
+
+TOTAL STUB 
+set routing-instances USER5 protocols ospf area 30 stub no-summaries      ---- ABR
+set routing-instances USER5 protocols ospf area 30 stub 
+
+11 - 503 - 183
+2 -  511 - 187
+6 -  509 - 188
+10 - 516 - 183
+1.x.y.1_lub_2
+
+set routing-instances USER5 protocols bgp group TO_AS2 peer-as 2 neighbor 1.2.5.1 
+set routing-instances USER5 protocols bgp group TO_AS2 type external
+set routing-instances USER5 routing-options autonomous-system 5
+
+
+183
+USER5 {                             
+        instance-type virtual-router;   
+        interface ge-0/0/1.503;         
+        interface ge-0/0/1.505;         
+        interface ge-0/0/1.506;         
+        interface ge-0/0/1.507;         
+        interface ge-0/0/1.516;         
+        interface lo0.5;                
+        routing-options {               
+            autonomous-system 5;        
+        }                               
+        protocols {                     
+            bgp {                       
+                export U5-FROM-OSPF;    
+                group TO_AS11 {         
+                    type external;      
+                    peer-as 11;         
+                    neighbor 1.5.11.2;  
+                }                       
+                group INTERNEL {        
+                    type internal;      
+                    local-address 192.168.5.183;
+                    neighbor 192.168.5.187;
+                    neighbor 192.168.5.188;
+                }                       
+                group TO_AS10 {         
+                    type external;      
+                    peer-as 10;         
+                    neighbor 10.5.10.2; 
+                }                       
+            }                           
+            ospf {                      
+                area 0.0.0.0 {          
+                    interface lo0.5 {   
+                        passive;        
+                    }                   
+                    interface ge-0/0/1.505;
+                    interface ge-0/0/1.507;
+                    interface ge-0/0/1.506;
+                }                       
+            }                           
+        }                               
+    }              

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<db>
+<person idnum="1234"><last>Kilpeläinen</last><first>Pekka</first></person>
+<person idnum="5678"><last>Möttönen</last><first>Matti</first></person>
+<person idnum="9012"><last>Möttönen</last><first>Maija</first></person>
+<person idnum="3456"><last>Römppänen</last><first>Maija</first></person>
+</db>

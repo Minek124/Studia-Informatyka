@@ -1,0 +1,66 @@
+clear all;
+close all;
+
+%load features from features.mat file using load function
+load features.mat;
+%read preprocessed image to matlab
+img=imread('preprocessed.png');
+
+%label objects using bwconncomp. Take list of pixels in each object using
+%regionprops. PixelList is x,y coordinates of each pixel in each object
+cc=bwconncomp(img);
+s=regionprops(cc,'PixelList');
+
+%take different features as vectors from feature matrix
+areas=features(:,1); %area of each objects
+ep=features(:,2); %number of end points in object's skeleton
+bp=features(:,3); %number of branch points in object's skeleton
+cla=zeros(size(areas)); %empty vector used in classification
+
+%classify one object at a time in for loop
+%our classes are:
+%1: small triangles
+%2: small circles
+%3: large triangles
+%4: large circles
+%5: other objects
+for i=1:cc.NumObjects 
+    if areas(i) < 2000 %if area of the object if less than 2000, then the object is classified as small
+        if bp(i)==1 && ep(i)==3 %in theory triangle should have 1 branch point and 3 end points 
+            cla(i)=1;
+        elseif bp(i)==1 && ep(i)==4 %circle should have 1 bp and 4 ep
+            cla(i)=2;
+        else 
+            cla(i)=5; %other objects are classified to different class
+        end
+    else %these are large objects
+        if bp(i)==1 && ep(i)==3 %triangle
+            cla(i)=3;
+        elseif bp(i)==1 && ep(i)==4 %circle
+            cla(i)=4;
+        else
+            cla(i)=5;
+        end
+    end
+end
+
+%make empty image with same size as the original image
+img2=zeros(size(img));
+
+for j=1:cc.NumObjects
+    %take objects one at a time, make empty binary image using false and
+    %size function. Pixels in each object can be get from the PixelList of
+    %the object. 
+    obj=false(size(img));
+    for i=1:length(s(j).PixelList)
+        obj(s(j).PixelList(i,2),s(j).PixelList(i,1))=1;
+    end
+    %And finally pixels of the current object get the label of
+    %the class it belongs to.
+    img2(obj==1)=cla(j);
+end
+%labels get different colors from label2rgb function
+figure;imshow(label2rgb(img2));
+
+%one large circle and one large triangle are classified to other objects'
+%class, because that circle has 5 end points and in theory it is a star.

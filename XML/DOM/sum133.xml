@@ -1,0 +1,6 @@
+<!DOCTYPE sum SYSTEM "expr.dtd">
+<sum>
+  <sum><int val="1" /><int val="2" /></sum>
+  <int val="100" />
+  <sum><int val="10" /><int val="10" /><int val="10" /></sum>
+</sum>

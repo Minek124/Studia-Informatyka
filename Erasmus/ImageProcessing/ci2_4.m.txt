@@ -1,0 +1,82 @@
+clear all;
+close all;
+
+%load features from features.mat file using load function
+load features.mat;
+%read preprocessed image to matlab
+img=imread('preprocessed.png');
+
+%label objects using bwconncomp. Take list of pixels in each object using
+%regionprops. PixelList is x,y coordinates of each pixel in each object.
+%Regionprops function is also used to get the area and the perimeter of
+%each object
+cc=bwconncomp(img);
+s=regionprops(cc,'PixelList','Area','Perimeter');
+
+%We use one new feature, which is the roundness measurement using equation
+%4 * pi * area / perimeter^2. In case of circle it should be from 0.9 to
+%1.0
+for i=1:cc.NumObjects
+    roundness(i)=4*pi*s(i).Area/s(i).Perimeter^2;
+end
+roundness=roundness'; %transpose to make it vertical vector
+
+%We don't use branch points and end points anymore and we just take the
+%calculated areas from features matrix
+areas=features(:,1);
+
+%Quantization of areas so that small objects with less than 2000 size have
+%value 0 and large objects have value 1.
+for i=1:length(areas)
+    if areas(i)<2000
+        areas2(i)=0;
+    else
+        areas2(i)=1;
+    end
+end
+areas2=areas2'; %transpose to make it vertical vector
+
+%new features matrix, rows represent objects and column features
+features2=[areas2, roundness];
+
+%k-means clustering to 5 clusters. We just in case use emptyaction
+%parameter, because k-means use random initial cluster centroids. In
+%default if empty cluster is created then matlab gives error to command
+%line. We use value singleton to force empty clusters to have one data
+%point
+km=kmeans(features2,5,'emptyaction','singleton');
+
+
+%in hierarchical clustering we need distances between each object in feature
+%space. pdist uses Euclidean distance as default. If you want to see
+%distances as distance matrix, you can use function squareform to output of
+%pdist function.
+Y=pdist(features2);
+%linkage function makes cluster binary tree from the distance matrix
+Z=linkage(Y);
+%dendrogram can be used to visualize cluster tree
+figure;dendrogram(Z);
+%cluster function can be used to cut the cluster tree to different number
+%of clusters. cutoff parameter can be used instead of maxclust also.
+T=cluster(Z,'maxclust',5);
+
+%two empty images, one for result of kmeans and the other for hierarchical
+img2=zeros(size(img));
+img3=zeros(size(img));
+
+for j=1:cc.NumObjects
+    %take objects one at a time, make empty binary image using false and
+    %size function. Pixels in each object can be get from the PixelList of
+    %the object. 
+    obj=false(size(img));
+    for i=1:length(s(j).PixelList)
+        obj(s(j).PixelList(i,2),s(j).PixelList(i,1))=1;
+    end
+    %And finally pixels of the current object get the label of
+    %the cluster it belongs to.
+    img2(obj==1)=km(j); %kmeans
+    img3(obj==1)=T(j); %hierarchical
+end
+%visualize results using label2rgb function
+figure;imshow(label2rgb(img2));title('k-means');
+figure;imshow(label2rgb(img3));title('hierarchical');

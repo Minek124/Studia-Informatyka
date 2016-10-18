@@ -1,0 +1,112 @@
+%!PS-Adobe-3.0
+/Times-BoldItalic findfont
+12 scalefont
+setfont
+
+/x 100 def
+/y 100 def
+x y moveto
+
+(theResult is ) print
+
+/wyswietl {
+/liczba exch def
+liczba 0 lt {/liczba liczba neg def (-) show} if
+/start 0 def
+/end 1 def
+100000 {
+liczba start ge liczba end lt and {/liczba start def exit} if
+/start start 1 add def
+/end end 1 add def
+} repeat
+/it 1 def
+/index 1 def
+/tab [100 {index /index index 1 add def} repeat] def
+100 {
+/cyfra liczba 10 mod def
+tab it cyfra put
+/it it 1 add def
+/liczba liczba 10 idiv def
+liczba 0 eq {exit} if
+}repeat
+/it it 1 sub def
+100 {
+tab it get 0 eq {(0) show} if
+tab it get 1 eq {(1) show} if
+tab it get 2 eq {(2) show} if
+tab it get 3 eq {(3) show} if
+tab it get 4 eq {(4) show} if
+tab it get 5 eq {(5) show} if
+tab it get 6 eq {(6) show} if
+tab it get 7 eq {(7) show} if
+tab it get 8 eq {(8) show} if
+tab it get 9 eq {(9) show} if
+/it it 1 sub def
+it 0 eq {exit } if
+} repeat
+}def
+/smok {
+/przesuniecie exch def
+/mnoznik exch def
+/x 0 def
+/y 0 def
+
+1000000 {
+rand rand lt {
+	/x -0.4 x mul def
+	/x x 1 sub def
+	/y -0.4 y mul def
+	/y y 0.1 add def
+	}
+	{
+	/tmpx 0.4 y mul def
+	/tmpy 0.76 y mul def
+	/x 0.76 x mul def
+	/x x tmpx sub def
+	/y 0.4 x mul def
+	/y y tmpy add def
+	}ifelse
+rand 3000000000 div rand 3000000000 div rand 3000000000 div setrgbcolor
+x mnoznik mul przesuniecie add y mnoznik mul przesuniecie add moveto
+1 0 rlineto
+stroke
+} repeat
+}def
+
+10 440 moveto
+(Smok Heighwaya random seed = ) show
+rrand wyswietl
+10 430 moveto
+0.5 0.5 0.5 setrgbcolor
+1 -1 scale
+(Smok Heighwaya random seed = ) show
+rrand wyswietl
+1 -1 scale
+gsave
+300 300 translate
+300 0 smok
+90 rotate
+300 0 smok
+90 rotate
+300 0 smok
+90 rotate
+300 0 smok
+90 rotate
+stroke
+grestore
+1 0 0 setrgbcolor
+450 600 translate
+0 0 moveto
+18 {
+30 0 rlineto
+gsave
+0 110 rlineto
+stroke
+grestore
+
+20 rotate
+} repeat
+45 85 moveto
+15 85 30 0 360 arc
+stroke
+showpage

@@ -1,0 +1,21 @@
+people{
+background-color: #CCCCCC;
+width: 100%;
+}
+person
+{
+display: block;
+margin-bottom: 20pt;
+margin-left: 5pt;
+}
+age,address
+{
+display: block;
+color: #000000;
+margin-left: 20pt;
+
+}
+name,name2{
+color: #FF0000;
+font-size: 20pt;
+}

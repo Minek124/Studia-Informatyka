@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zad1.css"?>
+<!DOCTYPE people SYSTEM "zad1.dtd">
+
+<people>
+	<person id="p1"> 
+		<name>Henryk</name>
+		<name2>Kowalski</name2>
+		<age>19</age>
+		<address>
+			<street>Warszawska</street>
+			<nr>123</nr>
+		</address>
+	</person>
+	<person id="p2"> 
+		<name>Jan</name>
+		<name2>Nowak</name2>
+		<age>21</age>
+		<address>
+			<street>Krakowska</street>
+			<nr>332</nr>
+		</address>
+	</person>
+	<person id="p3"> 
+		<name>Maciej</name>
+		<name2>Max</name2>
+		<age>55</age>
+		<address>
+			<street>29 Listopada</street>
+			<nr>44</nr>
+		</address>
+	</person>
+	<person id="p4"> 
+		<name>Janusz</name>
+		<name2>Nowak</name2>
+		<age>60</age>
+		<address>
+			<street>Łojasiewicza</street>
+			<nr>11</nr>
+		</address>
+	</person>
+</people>

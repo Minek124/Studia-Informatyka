@@ -1,0 +1,83 @@
+%!PS-Adobe-3.0
+
+/x 100 def
+/y 100 def
+/r 100 def
+
+
+/kolo {x y r 0 360 arc} def
+
+0 0 1 setrgbcolor
+
+/it 1 def
+4 { 
+
+/it it 1 add def
+it 4 div it 6 div it 7 div setrgbcolor
+/x x 20 add def 
+/r r 20 sub def
+kolo
+stroke
+} repeat
+
+0 0 0 setrgbcolor
+
+/it 1 def
+/rot 20 def
+/x 0 def
+/y 0 def
+/r 100 def
+gsave
+300 300 translate
+18 { 
+0.5 1 scale
+kolo
+stroke
+2 1 scale
+rot rotate
+} repeat
+grestore
+
+/odcinek { 
+0 0 moveto
+0 10 rlineto 
+0 10 translate 
+} def
+
+/F {
+odcinek
+stroke
+gsave
+315 rotate 
+odcinek
+stroke
+grestore
+odcinek
+stroke
+gsave
+45 rotate
+odcinek
+stroke
+grestore
+odcinek
+stroke
+} def
+
+/x 0 def
+/y 0 def
+100 200 translate
+x y moveto
+
+
+
+
+
+
+
+
+
+
+
+
+
+showpage

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE reglist
+  SYSTEM "reglist.dtd">
+<reglist courseID="RDK11" lastID="25">
+   <student id="RDK11_1">
+      <name>
+         <given>Tansu</given>
+         <family>Akdeniz</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e14@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+    <student id="RDK11_5">
+      <name>
+         <given>Anji Avalr</given>
+         <family>Autoi</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e26@student.uef.fi</email>
+      <group>Jo</group>
+   </student>
+   <student id="RDK11_3">
+      <name>
+         <given>Tommi Juhani</given>
+         <family>Bragge</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e46@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_4">
+      <name>
+         <given>Huan</given>
+         <family>Chen</family>
+      </name>
+      <branchAndYear>FM/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e62@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_6">
+      <name>
+         <given>Tuomo Tapio</given>
+         <family>Hartikainen</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e94@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_10">
+      <name>
+         <given>Sami Markus</given>
+         <family>Hyvönen</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e158@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK011_2">
+      <name>
+         <given>Anjne Latnei</given>
+         <family>Itnatla</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e12@cs.joensuu.fi</email>
+      <group>Jo</group>
+   </student>
+   <student id="RDK11_14">
+      <name>
+         <given>Ding</given>
+         <family>Liao</family>
+      </name>
+      <branchAndYear>FM/MDPCBUInformCom/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e222@cs.joensuu.fi</email>
+      <group>Jo</group>
+   </student>
+   <student id="RDK11_16">
+      <name>
+         <given>Matti Veli Aleksi</given>
+         <family>Mononen</family>
+      </name>
+      <branchAndYear>FM/Tietojenkäsitte/YT</branchAndYear>
+      <email>fake.addrd0e254@hytti.uku.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_17">
+      <name>
+         <given>Theresa Olubukola</given>
+         <family>Omodunbi</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e270@gmail.com</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_21">
+      <name>
+         <given>Anssi Petteri</given>
+         <family>Teistelä</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e334@hytti.uku.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_20">
+      <name>
+         <given>Otimm Roikas</given>
+         <family>Tirut</family>
+      </name>
+      <branchAndYear>TK2u</branchAndYear>
+      <email>fake.addrd0e280@hytti.uku.fi</email>
+      <group>Jo</group>
+   </student>
+   <student id="RDK11_22">
+      <name>
+         <given>Alena</given>
+         <family>Trapeznikova</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e350@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_23">
+      <name>
+         <given>Jon Lauri Waltteri</given>
+         <family>Turunen</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e366@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_24">
+      <name>
+         <given>Jesse Mikael</given>
+         <family>Valle</family>
+      </name>
+      <branchAndYear>LuK/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e382@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+   <student id="RDK11_25">
+      <name>
+         <given>Fatih</given>
+         <family>Özkan</family>
+      </name>
+      <branchAndYear>Ulkomvaihopisk/Tietojenkäsitte</branchAndYear>
+      <email>fake.addrd0e398@student.uef.fi</email>
+      <group>Ku</group>
+   </student>
+</reglist>

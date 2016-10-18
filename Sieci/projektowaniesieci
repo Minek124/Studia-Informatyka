@@ -1,0 +1,148 @@
+181
+7
+ge-3/0/1
+set interfaces ge-3/0/3 unit 0 family ethernet-switching port-mode access vlan members programisci 
+
+10.x.0.0/23
+
+10.x.0.0/27 kadry
+10.x.0.128/25 programisci
+
+set routing-instances USER7 routing-options static route 0/0 next-hop 10.7.0.1
+
+181 OK  Switch
+177 OK  ROUTER
+173 OK  701 kadry
+176 OK  700 program
+175 IDK 700 program
+
+ set interfaces ge-0/0/1 unit 701 family inet address 192.7.1.1/24 vrrp-group 71 virtual-address 192.7.1.254 priority 200
+
+unit 701 {
+            vlan-id 701;
+            family inet {
+                address 192.7.1.1/24 {
+                    vrrp-group 71 {
+                        virtual-address 192.7.1.254;
+                        priority 200;
+                        track {
+                            interface ge-0/0/2.1500 {
+                                priority-cost 120;
+                            }
+                        }               
+                    }
+                }
+            }
+        }
+        unit 702 {
+            vlan-id 702;
+            family inet {
+                address 192.7.2.1/24 {
+                    vrrp-group 72 {
+                        virtual-address 192.7.2.254;
+                        priority 100;
+                        track {
+                            interface ge-0/0/2.1500 {
+                                priority-cost 50;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+   dhcp {
+            router {
+                10.3.0.30;
+            }
+            server-identifier 10.3.0.1;
+            pool 10.3.0.0/27 {
+                address-range low 10.3.0.11 high 10.3.0.20;
+            }
+        }
+    }
+
+interfaces {                            
+    ge-0/0/0 {                          
+        unit 0 {                        
+            family inet {               
+                address 149.156.168.164/26;
+            }                           
+        }                               
+    }                                   
+    ge-0/0/4 {                          
+        unit 0 {                        
+            family ethernet-switching { 
+                port-mode access;       
+                vlan {                  
+                    members PROGRAMISCI;
+                }                       
+            }                           
+        }                               
+    }                                   
+    ge-0/0/5 {                          
+        unit 0 {                        
+            family ethernet-switching { 
+                port-mode access;       
+                vlan {                  
+                    members KADRY;      
+                }                       
+            }                           
+        }                               
+    }                                   
+    ge-0/0/6 {                          
+        unit 0 {                        
+            family ethernet-switching { 
+                port-mode access;       
+                vlan {                  
+                    members PROGRAMISCI;
+                }                       
+            }                           
+        }                               
+    }                                   
+    ge-0/0/7 {                          
+        unit 0 {                        
+            family ethernet-switching { 
+                port-mode trunk;        
+                vlan {                  
+                    members [ KADRY PROGRAMISCI ];
+                }                       
+            }                           
+        }                               
+    }                                   
+    vlan {                              
+        unit 301 {                      
+            family inet {               
+                address 10.3.0.1/27;    
+            }                           
+        }                               
+    }                                   
+}                                       
+routing-options {                       
+    static {                            
+        route 0.0.0.0/0 next-hop [ 149.156.168.129 14.5.1.1 ];
+    }                                   
+}                                       
+security {                              
+    zones {                             
+        security-zone TRUST {           
+            host-inbound-traffic {      
+                system-services {       
+                    all;                
+                }                       
+            }                           
+            interfaces {                
+                all;                    
+            }                           
+        }                               
+    }                                   
+}                                       
+vlans {                                 
+    KADRY {                             
+        vlan-id 301;                    
+        l3-interface vlan.301;          
+    }                                   
+    PROGRAMISCI {                       
+        vlan-id 300;                    
+    }                                   
+}   

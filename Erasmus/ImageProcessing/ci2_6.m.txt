@@ -1,0 +1,41 @@
+clear all;
+close all;
+
+%load features
+load features_new.mat;
+
+%for train function the input objects must be in columns
+inputs = features';
+
+%create self-organizing map, default dimensions of the map 8x8
+map = selforgmap([2 3],'initNeighbor',1); %smaller 2x3 map was used in this example
+%default initial neighborhood size is 3. Smaller initial neighborhood was
+%used with smaller map
+
+%train the map
+[map,tr] = train(map,inputs);
+
+%clustering using the map
+outputs = map(inputs);
+
+%read preprocessed image, find connected components and get PixelList
+img=imread('preprocessed.png');
+cc=bwconncomp(img);
+s=regionprops(cc,'PixelList');
+
+labels=vec2ind(outputs); %converts output vectors to indices which are used as labels
+img2=zeros(size(img)); %empty image
+
+for j=1:cc.NumObjects
+    %take objects one at a time, make empty binary image using false and
+    %size function. Pixels in each object can be get from the PixelList of
+    %the object. 
+    obj=false(size(img));
+    for i=1:length(s(j).PixelList)
+        obj(s(j).PixelList(i,2),s(j).PixelList(i,1))=1;
+    end
+    %And finally pixels of the current object get the label of
+    %the cluster it belongs to.
+    img2(obj==1)=labels(j);
+end
+figure;imshow(label2rgb(img2)); %visualize using label2rgb

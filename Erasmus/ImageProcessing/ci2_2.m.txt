@@ -1,0 +1,81 @@
+clear all;
+close all;
+
+%three features were calculated. The area of objects for size and for shape
+%morphological skeleton and its endpoints and branchpoints were used
+
+%read preprocessed image to matlab
+img=imread('preprocessed.png');
+
+%label objects using bwconncomp and calculate area of each object using
+%regionprops. PixelList is x,y coordinates of each pixel in each object
+cc=bwconncomp(img);
+s=regionprops(cc,'Area','PixelList');
+
+%read areas from the struct to the vector
+for i=1:cc.NumObjects
+    areas(i)=s(i).Area;
+end
+%transpose to make it vertical
+areas=areas';
+
+%structuring elements for post-processing skeleton, bigger element for
+%branchpoints
+se=strel('disk',6);
+se2=strel('disk',20);
+
+for j=1:cc.NumObjects
+    %take objects one at a time, make empty binary image using false and
+    %size function. Then the objects can be get from the struct get from
+    %regionprops and its PixelList
+    obj=false(size(img));
+    for i=1:length(s(j).PixelList)
+        obj(s(j).PixelList(i,2),s(j).PixelList(i,1))=1;
+    end
+    %used to visualize objects
+    %figure;imshow(obj);
+    
+    %objects
+    %1: triangle
+    %2: circle
+    %3: circle
+    %4: triangle
+    %5: star
+    %6: circle
+    %7: circle
+    %8: triangle
+    %9: hexagon
+    %10: triangle
+    %11: triangle
+    %12: circle
+    %in theory triangle should have 3 endpoints and 1 branchpoint. Circle
+    %should have 4 endpoints and 1 branchpoint.  Hexagon 4 ep and 2 bp,
+    %Star 5 ep and 1 bp.
+    
+    %calculate morphological skeleton of the object
+    skel=bwmorph(obj,'Skel','Inf');
+    
+    %calculate end points of the object and use imdilate to remove extra
+    %points. Calculate the number of points using bwconncomp
+    ep=bwmorph(skel,'Endpoints');
+    ep2=imdilate(ep,se);
+    cc_ep=bwconncomp(ep2);
+    endpoints(j)=cc_ep.NumObjects;
+
+    %same for branchpoints. Use larger structuring element this time
+    bp=bwmorph(skel,'Branchpoints');
+    bp2=imdilate(bp,se2);
+    cc_bp=bwconncomp(bp2);
+    branchpoints(j)=cc_bp.NumObjects;
+
+end
+%tranpose vectors
+endpoints=endpoints';
+branchpoints=branchpoints';
+
+%save features to file
+features=[areas, endpoints, branchpoints];
+save('features.mat','features');
+
+
+

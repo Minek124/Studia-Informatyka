@@ -1,0 +1,11 @@
+<boys>
+  <!-- The boys seem to have even numbers, but perhaps that's not relevant -->
+  <boy no="2" name="Antti" age="5" />
+  <boy no="4" name="Jussi" age="7" />
+  <boy no="6" name="Kalle" age="6" />
+  <boy no="6" name="Lauri" age="10" />
+  <boy no="8" name="Matti" age="11" />
+  <boy no="16" name="Pentti" age="11" />
+  <boy no="26" name="Risto" age="12" />
+  <boy no="28" name="Ville" age="12" />
+</boys>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<root xmlns="Local namespace" 
+xmlns:p2="http://p2.net"
+xmlns:p1="http://p1.org">
+
+<p1:descr date="23.2.06" author="PK">Small test document</p1:descr>
+  <p1:body>
+    <p2:div id="Div01">
+      <p2:sect>This is a p2:section</p2:sect>
+    </p2:div>
+    <p2:div id="Div02">Another p2:division</p2:div>
+  </p1:body>
+</root>
